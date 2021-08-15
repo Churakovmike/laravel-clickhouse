@@ -2,7 +2,10 @@
 
 namespace ChurakovMike\LaravelClickHouse\Database;
 
-class Model
+abstract class Model
 {
-
+    public function newEloquentBuilder($query): Builder
+    {
+        return new Builder($query);
+    }
 }
