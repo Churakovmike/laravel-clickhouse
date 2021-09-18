@@ -27,7 +27,7 @@ class InputOutputFormat
     public const JSON_STRING_EACH_ROW_WITH_PROGRESS = 'JSONStringEachRowWithProgress';
     public const JSON_COMPACT_EACH_ROW = 'JSONCompactEachRow';
     public const JSON_COMPACT_EACH_ROW_WITH_NAMES_AND_TYPES = 'JSONCompactEachRowWithNamesAndTypes';
-    public const JSONCompactStringEachRow = 'JSONCompactStringEachRow';
+    public const JSON_COMPACT_STRING_EACH_ROW = 'JSONCompactStringEachRow';
     public const JSON_COMPACT_STRING_EACH_ROW_WITH_NAMES_AND_TYPES = 'JSONCompactStringEachRowWithNamesAndTypes';
     public const TSKV = 'TSKV';
     public const PRETTY = 'Pretty';

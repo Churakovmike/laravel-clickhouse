@@ -2,10 +2,16 @@
 
 namespace ChurakovMike\LaravelClickHouse\Database;
 
-abstract class Model
+class Model extends \Illuminate\Database\Eloquent\Model
 {
-    public function newEloquentBuilder($query): Builder
+    protected $table = 'events_local';
+
+    protected $connection = 'clickhouse';
+
+    public function setConnection($name)
     {
-        return new Builder($query);
+        $this->connection = 'clickhouse';
+
+        return $this;
     }
 }

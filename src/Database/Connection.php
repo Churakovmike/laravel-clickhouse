@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace ChurakovMike\LaravelClickHouse\Database;
 
-use Closure;
-use Illuminate\Database\ConnectionInterface;
-
-class Connection implements ConnectionInterface
+class Connection extends \Illuminate\Database\Connection
 {
     public function table($table, $as = null)
     {
@@ -24,9 +21,9 @@ class Connection implements ConnectionInterface
         // TODO: Implement selectOne() method.
     }
 
-    public function select($query, $bindings = [], $useReadPdo = true)
+    public function select($query, $bindings = [], $useReadPdo = false)
     {
-        // TODO: Implement select() method.
+        dump($query, $bindings, $useReadPdo);
     }
 
     public function cursor($query, $bindings = [], $useReadPdo = true)
@@ -69,7 +66,7 @@ class Connection implements ConnectionInterface
         // TODO: Implement prepareBindings() method.
     }
 
-    public function transaction(Closure $callback, $attempts = 1)
+    public function transaction(\Closure $callback, $attempts = 1)
     {
         // TODO: Implement transaction() method.
     }
@@ -84,9 +81,9 @@ class Connection implements ConnectionInterface
         // TODO: Implement commit() method.
     }
 
-    public function rollBack()
+    public function rollBack($toLevel = null)
     {
-        // TODO: Implement rollBack() method.
+        // TODO: Implement commit() method.
     }
 
     public function transactionLevel()
@@ -94,7 +91,7 @@ class Connection implements ConnectionInterface
         // TODO: Implement transactionLevel() method.
     }
 
-    public function pretend(Closure $callback)
+    public function pretend(\Closure $callback)
     {
         // TODO: Implement pretend() method.
     }
