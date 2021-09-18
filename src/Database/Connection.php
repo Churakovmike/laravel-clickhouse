@@ -4,8 +4,35 @@ declare(strict_types=1);
 
 namespace ChurakovMike\LaravelClickHouse\Database;
 
+use ChurakovMike\ClickHouseClient\HttpClient;
+use Illuminate\Support\Str;
+
 class Connection extends \Illuminate\Database\Connection
 {
+    private HttpClient $client;
+
+    public function __construct($pdo, $database = '', $tablePrefix = '', array $config = [])
+    {
+//        dd($config, $pdo, $database, $tablePrefix);
+        $this->client = new HttpClient();
+
+        $this->database = $pdo['database'];
+
+        $this->setDatabaseName($pdo['database']);
+
+        $this->useDefaultQueryGrammar();
+
+        $this->useDefaultPostProcessor();
+    }
+
+    /**
+     * @experimental
+     */
+    public function getDatabaseName()
+    {
+        return 'test_database';
+    }
+
     public function table($table, $as = null)
     {
         // TODO: Implement table() method.
@@ -23,7 +50,25 @@ class Connection extends \Illuminate\Database\Connection
 
     public function select($query, $bindings = [], $useReadPdo = false)
     {
-        dump($query, $bindings, $useReadPdo);
+//        return $this->run($query, $bindings, function ($query, $bindings) use ($useReadPdo) {
+        if ($this->pretending()) {
+            return [];
+        }
+
+        $statement = $this->bindQueryValues($query, $bindings);
+
+        $this->client->get($statement);
+        dd($this->client->get($statement));
+
+        //DB::statement( 'ALTER TABLE TEST_TABLE AUTO_INCREMENT=:incrementStart', ['incrementStart' => 1111] );
+//        dd($statement);
+        return $statement->fetchAll();
+//        });
+    }
+
+    public function bindQueryValues(string $statement, array $bindings): string
+    {
+        return Str::replaceArray('?', $bindings, $statement);
     }
 
     public function cursor($query, $bindings = [], $useReadPdo = true)
