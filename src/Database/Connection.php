@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ChurakovMike\LaravelClickHouse\Database;
 
 use ChurakovMike\ClickHouseClient\HttpClient;
-use Illuminate\Support\Str;
 
 class Connection extends \Illuminate\Database\Connection
 {
@@ -50,25 +49,50 @@ class Connection extends \Illuminate\Database\Connection
 
     public function select($query, $bindings = [], $useReadPdo = false)
     {
-//        return $this->run($query, $bindings, function ($query, $bindings) use ($useReadPdo) {
         if ($this->pretending()) {
             return [];
         }
 
         $statement = $this->bindQueryValues($query, $bindings);
 
-        $this->client->get($statement);
-        dd($this->client->get($statement));
-
-        //DB::statement( 'ALTER TABLE TEST_TABLE AUTO_INCREMENT=:incrementStart', ['incrementStart' => 1111] );
+        $statement = $this->setOutputFormat($statement);
 //        dd($statement);
+        $result = $this->client->get($statement);
+
+        return json_decode($result)->data;
+
         return $statement->fetchAll();
-//        });
     }
 
     public function bindQueryValues(string $statement, array $bindings): string
     {
-        return Str::replaceArray('?', $bindings, $statement);
+        return $this->replaceArray('?', $bindings, $statement);
+    }
+
+    public function setOutputFormat(string $query): string
+    {
+//        return $query . ' FORMAT TabSeparatedWithNames';
+        return $query . ' FORMAT JSON';
+    }
+
+    public function replaceArray($search, array $replace, $subject): string
+    {
+        $segments = explode($search, $subject);
+
+        $result = array_shift($segments);
+
+        foreach ($segments as $segment) {
+
+            $replaceItem = array_shift($replace) ?? $search;
+
+            if (is_string($replaceItem)) {
+                $replaceItem = "'" . $replaceItem . "'";
+            }
+
+            $result .= $replaceItem . $segment;
+        }
+
+        return $result;
     }
 
     public function cursor($query, $bindings = [], $useReadPdo = true)
