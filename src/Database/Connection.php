@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ChurakovMike\LaravelClickHouse\Database;
 
 use ChurakovMike\ClickHouseClient\HttpClient;
+use ChurakovMike\LaravelClickHouse\Database\Enums\InputOutputFormat;
 use Illuminate\Database\ConnectionResolverInterface;
 
 class Connection extends \Illuminate\Database\Connection implements ConnectionResolverInterface
@@ -69,8 +70,7 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 
     public function setOutputFormat(string $query): string
     {
-//        return $query . ' FORMAT TabSeparatedWithNames';
-        return $query . ' FORMAT JSON';
+        return $query . ' FORMAT ' . InputOutputFormat::JSON;
     }
 
     public function replaceArray($search, array $replace, $subject): string
