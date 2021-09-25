@@ -19,9 +19,9 @@ class ClickhouseServiceProvider extends ServiceProvider
         $db->extend('clickhouse', function ($config, $name) {
             $config['name'] = $name;
 
-            return new Connection($config);
+            return new Connection($config, $config['database']);
         });
 
-        Model::setConnectionResolver($db);
+        Model::setConnectionResolver($db->connection('clickhouse'));
     }
 }

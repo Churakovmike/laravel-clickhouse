@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace ChurakovMike\LaravelClickHouse\Database;
 
 use ChurakovMike\ClickHouseClient\HttpClient;
+use Illuminate\Database\ConnectionResolverInterface;
 
-class Connection extends \Illuminate\Database\Connection
+class Connection extends \Illuminate\Database\Connection implements ConnectionResolverInterface
 {
     private HttpClient $client;
 
@@ -60,8 +61,6 @@ class Connection extends \Illuminate\Database\Connection
         $result = $this->client->get($statement);
 
         return json_decode($result)->data;
-
-        return $statement->fetchAll();
     }
 
     public function bindQueryValues(string $statement, array $bindings): string
@@ -163,5 +162,20 @@ class Connection extends \Illuminate\Database\Connection
     public function pretend(\Closure $callback)
     {
         // TODO: Implement pretend() method.
+    }
+
+    public function connection($name = null)
+    {
+        return $this;
+    }
+
+    public function getDefaultConnection()
+    {
+        return $this->connection();
+    }
+
+    public function setDefaultConnection($name)
+    {
+        //
     }
 }
