@@ -100,7 +100,9 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 
     public function insert($query, $bindings = [])
     {
-        // TODO: Implement insert() method.
+        $statement = $this->bindQueryValues($query, $bindings);
+
+        return $this->client->post($statement);
     }
 
     public function update($query, $bindings = [])

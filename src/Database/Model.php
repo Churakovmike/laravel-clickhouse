@@ -9,6 +9,10 @@ use Illuminate\Support\Str;
 
 class Model extends \Illuminate\Database\Eloquent\Model
 {
+    public $incrementing = false;
+
+    public $timestamps = false;
+
     public function setConnection($name): self
     {
         $this->connection = self::getConnectionResolver()->getDefaultConnection();
