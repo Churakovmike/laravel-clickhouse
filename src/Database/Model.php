@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 class Model extends \Illuminate\Database\Eloquent\Model
 {
-    protected $table = 'test_database.events_local';
+//    protected $table = 'test_database.events_local';
 
     protected $connection = 'clickhouse';
 
@@ -28,6 +28,15 @@ class Model extends \Illuminate\Database\Eloquent\Model
         } catch (\Throwable $exception) {
             return $tableName;
         }
+    }
+
+    public function setTable($table)
+    {
+        return $this;
+
+        $this->table = $table;
+
+        return $this;
     }
 
     public static function getConnectionResolver()
