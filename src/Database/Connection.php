@@ -29,7 +29,7 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
      */
     public function getDatabaseName()
     {
-        return 'test_database';
+        return $this->database;
     }
 
     public function table($table, $as = null)
