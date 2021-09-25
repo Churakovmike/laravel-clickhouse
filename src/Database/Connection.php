@@ -7,6 +7,7 @@ namespace ChurakovMike\LaravelClickHouse\Database;
 use ChurakovMike\ClickHouseClient\HttpClient;
 use ChurakovMike\LaravelClickHouse\Database\Enums\InputOutputFormat;
 use Illuminate\Database\ConnectionResolverInterface;
+use Illuminate\Database\Query\Expression;
 
 class Connection extends \Illuminate\Database\Connection implements ConnectionResolverInterface
 {
@@ -35,12 +36,12 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 
     public function table($table, $as = null)
     {
-        // TODO: Implement table() method.
+        return $this->query()->from($this->database . '.' . $table, $as);
     }
 
     public function raw($value)
     {
-        // TODO: Implement raw() method.
+        return new Expression($value);
     }
 
     public function selectOne($query, $bindings = [], $useReadPdo = true)
@@ -115,9 +116,14 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         // TODO: Implement delete() method.
     }
 
+    //@todo: add get/post to save/insert
     public function statement($query, $bindings = [])
     {
-        // TODO: Implement statement() method.
+        $statement = $this->bindQueryValues($query, $bindings);
+
+        $this->recordsHaveBeenModified();
+
+        return $this->client->get($statement);
     }
 
     public function affectingStatement($query, $bindings = [])
