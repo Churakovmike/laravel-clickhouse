@@ -13,7 +13,6 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 
     public function __construct($pdo, $database = '', $tablePrefix = '', array $config = [])
     {
-//        dd($config, $pdo, $database, $tablePrefix);
         $this->client = new HttpClient();
 
         $this->database = $pdo['database'];
@@ -57,7 +56,7 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         $statement = $this->bindQueryValues($query, $bindings);
 
         $statement = $this->setOutputFormat($statement);
-//        dd($statement);
+
         $result = $this->client->get($statement);
 
         return json_decode($result)->data;

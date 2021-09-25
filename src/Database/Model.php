@@ -2,17 +2,14 @@
 
 namespace ChurakovMike\LaravelClickHouse\Database;
 
+use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Support\Str;
 
 class Model extends \Illuminate\Database\Eloquent\Model
 {
-//    protected $table = 'test_database.events_local';
-
-    protected $connection = 'clickhouse';
-
-    public function setConnection($name)
+    public function setConnection($name): self
     {
-        $this->connection = 'clickhouse';
+        $this->connection = self::getConnectionResolver()->getDefaultConnection();
 
         return $this;
     }
@@ -30,16 +27,12 @@ class Model extends \Illuminate\Database\Eloquent\Model
         }
     }
 
-    public function setTable($table)
+    public function setTable($table): self
     {
-        return $this;
-
-        $this->table = $table;
-
         return $this;
     }
 
-    public static function getConnectionResolver()
+    public static function getConnectionResolver(): ConnectionResolverInterface
     {
         return static::$resolver;
     }
