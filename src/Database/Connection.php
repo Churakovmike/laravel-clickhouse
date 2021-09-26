@@ -6,10 +6,10 @@ namespace ChurakovMike\LaravelClickHouse\Database;
 
 use ChurakovMike\ClickHouseClient\HttpClient;
 use ChurakovMike\LaravelClickHouse\Database\Enums\InputOutputFormat;
+use ChurakovMike\LaravelClickHouse\Database\Exceptions\ConnectionException;
 use ChurakovMike\LaravelClickHouse\Database\Query\Grammar;
 use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Database\Query\Expression;
-use Illuminate\Database\Query\Grammars\Grammar as QueryGrammar;
 
 class Connection extends \Illuminate\Database\Connection implements ConnectionResolverInterface
 {
@@ -117,9 +117,9 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
     {
         $statement = $this->bindQueryValues($query, $bindings);
 
-        $statement = $this->setOutputFormat($statement);
-
-        $this->client->get($statement);
+//        $statement = $this->setOutputFormat($statement);
+//        dd($statement);
+        $this->client->post($statement);
     }
 
     //@todo: add get/post to save/insert
@@ -147,24 +147,48 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         // TODO: Implement prepareBindings() method.
     }
 
+    /**
+     * @deprecated
+     *
+     * @param \Closure $callback
+     * @param int $attempts
+     * @return mixed|void
+     * @throws ConnectionException
+     */
     public function transaction(\Closure $callback, $attempts = 1)
     {
-        // TODO: Implement transaction() method.
+        throw new ConnectionException('Clickhouse don\t support transactions');
     }
 
+    /**
+     * @deprecated
+     *
+     * @throws ConnectionException
+     */
     public function beginTransaction()
     {
-        // TODO: Implement beginTransaction() method.
+        throw new ConnectionException('Clickhouse don\t support transactions');
     }
 
+    /**
+     * @deprecated
+     *
+     * @throws ConnectionException
+     */
     public function commit()
     {
-        // TODO: Implement commit() method.
+        throw new ConnectionException('Clickhouse don\t support commit');
     }
 
+    /**
+     * @deprecated
+     *
+     * @param null $toLevel
+     * @throws ConnectionException
+     */
     public function rollBack($toLevel = null)
     {
-        // TODO: Implement commit() method.
+        throw new ConnectionException('Clickhouse don\t support rollbacks');
     }
 
     public function transactionLevel()
@@ -189,10 +213,10 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 
     public function setDefaultConnection($name)
     {
-        //
+        // TODO: Implement setDefaultConnection() method.
     }
 
-    protected function getDefaultQueryGrammar()
+    protected function getDefaultQueryGrammar(): Grammar
     {
         return new Grammar();
     }
