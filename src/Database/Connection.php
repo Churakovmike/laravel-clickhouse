@@ -6,8 +6,10 @@ namespace ChurakovMike\LaravelClickHouse\Database;
 
 use ChurakovMike\ClickHouseClient\HttpClient;
 use ChurakovMike\LaravelClickHouse\Database\Enums\InputOutputFormat;
+use ChurakovMike\LaravelClickHouse\Database\Query\Grammar;
 use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Database\Query\Expression;
+use Illuminate\Database\Query\Grammars\Grammar as QueryGrammar;
 
 class Connection extends \Illuminate\Database\Connection implements ConnectionResolverInterface
 {
@@ -113,7 +115,11 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 
     public function delete($query, $bindings = [])
     {
-        // TODO: Implement delete() method.
+        $statement = $this->bindQueryValues($query, $bindings);
+
+        $statement = $this->setOutputFormat($statement);
+
+        $this->client->get($statement);
     }
 
     //@todo: add get/post to save/insert
@@ -184,5 +190,10 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
     public function setDefaultConnection($name)
     {
         //
+    }
+
+    protected function getDefaultQueryGrammar()
+    {
+        return new Grammar();
     }
 }

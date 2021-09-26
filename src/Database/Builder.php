@@ -1,28 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ChurakovMike\LaravelClickHouse\Database;
 
-use ChurakovMike\LaravelClickHouse\Database\Query\Grammar;
-use Illuminate\Database\ConnectionInterface;
-
-class Builder
+class Builder extends \Illuminate\Database\Eloquent\Builder
 {
-    private ConnectionInterface $connection;
-    private Grammar $grammar;
-
-    public function __construct(ConnectionInterface $connection, Grammar $grammar)
+    public function delete()
     {
-        $this->connection = $connection;
-        $this->grammar = $grammar;
-    }
+        if (isset($this->onDelete)) {
+            return call_user_func($this->onDelete, $this);
+        }
 
-    public function getConnection(): ConnectionInterface
-    {
-        return $this->connection;
-    }
-
-    public function getGrammar(): Grammar
-    {
-        return $this->grammar;
+        return $this->toBase()->delete();
     }
 }

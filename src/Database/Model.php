@@ -15,7 +15,8 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
     public function setConnection($name): self
     {
-        $this->connection = self::getConnectionResolver()->getDefaultConnection();
+        $this->connection = $name;
+//        $this->connection = self::getConnectionResolver()->getDefaultConnection();
 
         return $this;
     }
@@ -41,5 +42,17 @@ class Model extends \Illuminate\Database\Eloquent\Model
     public static function getConnectionResolver(): ConnectionResolverInterface
     {
         return static::$resolver;
+    }
+
+    public function newModelQuery()
+    {
+        return $this->newEloquentBuilder(
+            $this->newBaseQueryBuilder()
+        )->setModel($this);
+    }
+
+    public function newEloquentBuilder($query)
+    {
+        return new Builder($query);
     }
 }
