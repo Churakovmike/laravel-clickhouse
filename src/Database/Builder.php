@@ -14,4 +14,11 @@ class Builder extends \Illuminate\Database\Eloquent\Builder
 
         return $this->toBase()->delete();
     }
+
+    public function update(array $values)
+    {
+//        dd($values);
+
+        return $this->toBase()->update($this->addUpdatedAtColumn($values));
+    }
 }

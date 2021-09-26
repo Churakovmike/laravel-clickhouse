@@ -10,6 +10,7 @@ use ChurakovMike\LaravelClickHouse\Database\Exceptions\ConnectionException;
 use ChurakovMike\LaravelClickHouse\Database\Query\Grammar;
 use Illuminate\Database\ConnectionResolverInterface;
 use Illuminate\Database\Query\Expression;
+use ChurakovMike\LaravelClickHouse\Database\Query\Builder as QueryBuilder;
 
 class Connection extends \Illuminate\Database\Connection implements ConnectionResolverInterface
 {
@@ -31,7 +32,7 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
     /**
      * @experimental
      */
-    public function getDatabaseName()
+    public function getDatabaseName(): string
     {
         return $this->database;
     }
@@ -110,6 +111,8 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 
     public function update($query, $bindings = [])
     {
+        dd('финальный апдейт' ,$query, $bindings);
+
         // TODO: Implement update() method.
     }
 
@@ -117,8 +120,6 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
     {
         $statement = $this->bindQueryValues($query, $bindings);
 
-//        $statement = $this->setOutputFormat($statement);
-//        dd($statement);
         $this->client->post($statement);
     }
 
@@ -219,5 +220,12 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
     protected function getDefaultQueryGrammar(): Grammar
     {
         return new Grammar();
+    }
+
+    public function query(): QueryBuilder
+    {
+        return new QueryBuilder(
+            $this, $this->getQueryGrammar(), $this->getPostProcessor()
+        );
     }
 }

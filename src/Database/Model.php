@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ChurakovMike\LaravelClickHouse\Database;
 
 use Illuminate\Database\ConnectionResolverInterface;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Str;
 
 class Model extends \Illuminate\Database\Eloquent\Model
@@ -53,6 +54,13 @@ class Model extends \Illuminate\Database\Eloquent\Model
 
     public function newEloquentBuilder($query)
     {
-        return new Builder($query);
+        return new \ChurakovMike\LaravelClickHouse\Database\Builder($query);
+    }
+
+    protected function setKeysForSaveQuery(Builder $query)
+    {
+        $query->where($this->getKeyName(), '=', $this->getKeyForSaveQuery());
+
+        return $query;
     }
 }
