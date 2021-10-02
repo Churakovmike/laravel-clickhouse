@@ -17,8 +17,6 @@ class Builder extends \Illuminate\Database\Eloquent\Builder
 
     public function update(array $values)
     {
-//        dd($values);
-
         return $this->toBase()->update($this->addUpdatedAtColumn($values));
     }
 }
