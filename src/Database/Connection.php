@@ -16,13 +16,13 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 {
     private HttpClient $client;
 
-    public function __construct($pdo, $database = '', $tablePrefix = '', array $config = [])
+    public function __construct(array $databaseConfig, $database = '', $tablePrefix = '', array $config = [])
     {
         $this->client = new HttpClient();
 
-        $this->database = $pdo['database'];
+        $this->database = $databaseConfig['database'];
 
-        $this->setDatabaseName($pdo['database']);
+        $this->setDatabaseName($databaseConfig['database']);
 
         $this->useDefaultQueryGrammar();
 
@@ -140,9 +140,17 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 
     public function unprepared($query)
     {
-        // TODO: Implement unprepared() method.
+        return $this->client->post($query);
     }
 
+    /**
+     * Use the replaceArray() method instead of this.
+     *
+     * @param array $bindings
+     * @return array|void
+     *
+     * @deprecated
+     */
     public function prepareBindings(array $bindings)
     {
         // TODO: Implement prepareBindings() method.
@@ -156,7 +164,7 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
      * @return mixed|void
      * @throws ConnectionException
      */
-    public function transaction(\Closure $callback, $attempts = 1)
+    public function transaction(\Closure $callback, $attempts = 1): void
     {
         throw new ConnectionException('Clickhouse don\t support transactions');
     }
@@ -166,7 +174,7 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
      *
      * @throws ConnectionException
      */
-    public function beginTransaction()
+    public function beginTransaction(): void
     {
         throw new ConnectionException('Clickhouse don\t support transactions');
     }
@@ -176,7 +184,7 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
      *
      * @throws ConnectionException
      */
-    public function commit()
+    public function commit(): void
     {
         throw new ConnectionException('Clickhouse don\t support commit');
     }
@@ -187,14 +195,14 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
      * @param null $toLevel
      * @throws ConnectionException
      */
-    public function rollBack($toLevel = null)
+    public function rollBack($toLevel = null): void
     {
         throw new ConnectionException('Clickhouse don\t support rollbacks');
     }
 
-    public function transactionLevel()
+    public function transactionLevel(): void
     {
-        // TODO: Implement transactionLevel() method.
+        throw new ConnectionException('Clickhouse don\t support transactions');
     }
 
     public function pretend(\Closure $callback)
@@ -202,19 +210,19 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         // TODO: Implement pretend() method.
     }
 
-    public function connection($name = null)
+    public function connection($name = null): self
     {
         return $this;
     }
 
-    public function getDefaultConnection()
+    public function getDefaultConnection(): self
     {
         return $this->connection();
     }
 
-    public function setDefaultConnection($name)
+    public function setDefaultConnection($name): bool
     {
-        // TODO: Implement setDefaultConnection() method.
+        return true;
     }
 
     protected function getDefaultQueryGrammar(): Grammar
