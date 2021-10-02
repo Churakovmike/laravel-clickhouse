@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ChurakovMike\LaravelClickHouse\Database;
 
-use ChurakovMike\ClickHouseClient\HttpClient;
+use ChurakovMike\LaravelClickHouse\Database\Client\HttpClient;
 use ChurakovMike\LaravelClickHouse\Database\Enums\InputOutputFormat;
 use ChurakovMike\LaravelClickHouse\Database\Exceptions\ConnectionException;
 use ChurakovMike\LaravelClickHouse\Database\Query\Grammar;
