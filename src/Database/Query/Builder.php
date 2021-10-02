@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ChurakovMike\LaravelClickHouse\Database\Query;
 
 class Builder extends \Illuminate\Database\Query\Builder

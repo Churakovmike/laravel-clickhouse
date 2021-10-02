@@ -72,9 +72,9 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         return $this->replaceArray('?', $bindings, $statement);
     }
 
-    public function setOutputFormat(string $query): string
+    public function setOutputFormat(string $query, $format = InputOutputFormat::JSON): string
     {
-        return $query . ' FORMAT ' . InputOutputFormat::JSON;
+        return $query . ' FORMAT ' . $format;
     }
 
     public function replaceArray($search, array $replace, $subject): string
@@ -97,9 +97,15 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         return $result;
     }
 
-    public function cursor($query, $bindings = [], $useReadPdo = true)
+    public function cursor($query, $bindings = [], $useReadPdo = true): array
     {
-        // TODO: Implement cursor() method.
+        $statement = $this->bindQueryValues($query, $bindings);
+
+        $statement = $this->setOutputFormat($statement);
+
+        $result = $this->client->get($statement);
+
+        return json_decode($result)->data;
     }
 
     public function insert($query, $bindings = [])
