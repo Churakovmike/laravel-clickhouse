@@ -1,0 +1,26 @@
+{
+    "name": "churakovmike/laravel-clickhouse",
+    "type": "library",
+    "description": "Eloquent extension with Clickhouse",
+    "keywords": [
+        "clickhouse",
+        "eloquent clickhouse",
+        "laravel clickhouse"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Churakov Mike"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Mike\\LaravelClickhouse\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {},
+    "config": {
+        "sort-packages": true
+    }
+}
