@@ -71,8 +71,6 @@ class Grammar extends \Illuminate\Database\Query\Grammars\Grammar
 
     protected function compileUpdateWithoutJoins(Builder $query, $table, $columns, $where): string
     {
-//        dd($table, $columns, $where);
-
-        return "update {$table} set {$columns} {$where}";
+        return "alter table {$table} update {$columns} {$where}";
     }
 }

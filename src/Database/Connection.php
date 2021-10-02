@@ -111,9 +111,7 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 
     public function update($query, $bindings = [])
     {
-        dd('финальный апдейт' ,$query, $bindings);
-
-        // TODO: Implement update() method.
+        return $this->affectingStatement($query, $bindings);
     }
 
     public function delete($query, $bindings = [])
@@ -135,7 +133,9 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 
     public function affectingStatement($query, $bindings = [])
     {
-        // TODO: Implement affectingStatement() method.
+        $statement = $this->bindQueryValues($query, $bindings);
+
+        return $this->client->post($statement);
     }
 
     public function unprepared($query)

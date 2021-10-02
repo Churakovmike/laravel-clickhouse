@@ -45,21 +45,53 @@ class Model extends \Illuminate\Database\Eloquent\Model
         return static::$resolver;
     }
 
-    public function newModelQuery()
+    public function newModelQuery(): Builder
     {
         return $this->newEloquentBuilder(
             $this->newBaseQueryBuilder()
         )->setModel($this);
     }
 
-    public function newEloquentBuilder($query)
+    public function newEloquentBuilder($query): Builder
     {
         return new \ChurakovMike\LaravelClickHouse\Database\Builder($query);
     }
 
-    protected function setKeysForSaveQuery(Builder $query)
+    protected function setKeysForSaveQuery(Builder $query): Builder
     {
         $query->where($this->getKeyName(), '=', $this->getKeyForSaveQuery());
+
+        return $query;
+    }
+
+    protected function performUpdate(Builder $query): bool
+    {
+        if ($this->fireModelEvent('updating') === false) {
+            return false;
+        }
+
+        if ($this->usesTimestamps()) {
+            $this->updateTimestamps();
+        }
+
+        $dirty = $this->getDirty();
+
+        if (count($dirty) > 0) {
+            $this->saveDirtyKeyNameForSaveQuery($query, $dirty)->update($dirty);
+
+            $this->syncChanges();
+
+            $this->fireModelEvent('updated', false);
+        }
+
+        return true;
+    }
+
+    protected function saveDirtyKeyNameForSaveQuery(Builder $query, array $dirty): Builder
+    {
+        foreach ($dirty as $key => $value) {
+            $query->where($key, '=', $this->getOriginal($key));
+        }
 
         return $query;
     }
