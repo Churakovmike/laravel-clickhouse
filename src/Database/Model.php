@@ -17,7 +17,6 @@ class Model extends \Illuminate\Database\Eloquent\Model
     public function setConnection($name): self
     {
         $this->connection = $name;
-//        $this->connection = self::getConnectionResolver()->getDefaultConnection();
 
         return $this;
     }

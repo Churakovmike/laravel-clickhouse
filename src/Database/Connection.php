@@ -42,7 +42,7 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         return $this->query()->from($this->database . '.' . $table, $as);
     }
 
-    public function raw($value)
+    public function raw($value): Expression
     {
         return new Expression($value);
     }
@@ -211,9 +211,15 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         throw new ConnectionException('Clickhouse don\t support transactions');
     }
 
+    /**
+     * @deprecated
+     *
+     * @param \Closure $callback
+     * @return array|void
+     */
     public function pretend(\Closure $callback)
     {
-        // TODO: Implement pretend() method.
+        //
     }
 
     public function connection($name = null): self
