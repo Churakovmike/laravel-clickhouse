@@ -26,9 +26,9 @@ class Model extends \Illuminate\Database\Eloquent\Model
         $tableName = $this->table ?? Str::snake(Str::pluralStudly(class_basename($this)));
 
         try {
-           $databaseName = self::getConnectionResolver()->getDatabaseName();
+            $databaseName = self::getConnectionResolver()->getDatabaseName();
 
-           return $databaseName . '.' . $tableName;
+            return $databaseName . '.' . $tableName;
         } catch (\Throwable $exception) {
             return $tableName;
         }

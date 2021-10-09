@@ -239,7 +239,9 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
     public function query(): QueryBuilder
     {
         return new QueryBuilder(
-            $this, $this->getQueryGrammar(), $this->getPostProcessor()
+            $this,
+            $this->getQueryGrammar(),
+            $this->getPostProcessor()
         );
     }
 
