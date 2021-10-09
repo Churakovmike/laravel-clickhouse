@@ -41,7 +41,6 @@ class HttpClient
         $this->initClient();
     }
 
-    //todo:add response parsing
     public function get(string $query)
     {
         $response = $this->client->request('GET', '', [

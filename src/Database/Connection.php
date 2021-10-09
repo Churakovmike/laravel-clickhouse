@@ -49,7 +49,9 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 
     public function selectOne($query, $bindings = [], $useReadPdo = true)
     {
-        // TODO: Implement selectOne() method.
+        $records = $this->select($query, $bindings);
+
+        return array_shift($records);
     }
 
     public function select($query, $bindings = [], $useReadPdo = false)
@@ -149,17 +151,9 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         return $this->client->post($query);
     }
 
-    /**
-     * Use the replaceArray() method instead of this.
-     *
-     * @param array $bindings
-     * @return array|void
-     *
-     * @deprecated
-     */
-    public function prepareBindings(array $bindings)
+    public function prepareBindings(array $bindings): array
     {
-        // TODO: Implement prepareBindings() method.
+        return $bindings;
     }
 
     /**
@@ -206,6 +200,11 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         throw new ConnectionException('Clickhouse don\t support rollbacks');
     }
 
+    /**
+     * @deprecated
+     *
+     * @throws ConnectionException
+     */
     public function transactionLevel(): void
     {
         throw new ConnectionException('Clickhouse don\t support transactions');
