@@ -86,7 +86,6 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         $result = array_shift($segments);
 
         foreach ($segments as $segment) {
-
             $replaceItem = array_shift($replace) ?? $search;
 
             if (is_string($replaceItem)) {
