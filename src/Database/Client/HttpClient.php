@@ -31,13 +31,13 @@ class HttpClient
         int $port = self::DEFAULT_PORT,
         string $username = self::DEFAULT_USERNAME,
         string $password = self::DEFAULT_PASSWORD,
-        ?int $timeout = self::DEFAULT_TIMEOUT
+        array $options = []
     ) {
         $this->host = $host;
         $this->port = $port;
         $this->username = $username;
         $this->password = $password;
-        $this->timeout = $timeout;
+        $this->timeout = $options['timeout'] ?? self::DEFAULT_TIMEOUT;
         $this->initClient();
     }
 
@@ -72,7 +72,7 @@ class HttpClient
             'auth' => [
                 $this->username,
                 $this->password,
-            ]
+            ],
         ];
     }
 

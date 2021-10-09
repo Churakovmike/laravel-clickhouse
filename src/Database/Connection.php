@@ -18,7 +18,7 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 
     public function __construct(array $config)
     {
-        $this->client = new HttpClient();
+        $this->client = $this->getClient($config);
 
         $this->database = $config['database'];
 
@@ -236,15 +236,26 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         return true;
     }
 
-    protected function getDefaultQueryGrammar(): Grammar
-    {
-        return new Grammar();
-    }
-
     public function query(): QueryBuilder
     {
         return new QueryBuilder(
             $this, $this->getQueryGrammar(), $this->getPostProcessor()
         );
+    }
+
+    public function getClient(array $config): HttpClient
+    {
+        return new HttpClient(
+            $config['host'],
+            $config['port'],
+            $config['username'],
+            $config['password'],
+            $config['options']
+        );
+    }
+
+    protected function getDefaultQueryGrammar(): Grammar
+    {
+        return new Grammar();
     }
 }
