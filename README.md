@@ -47,3 +47,28 @@ Clickhouse default configuration example:
     ]
 ]
 ```
+Usage
+------------
+Create new own model and inherit from the new model
+
+```php
+<?php
+
+namespace App;
+
+use ChurakovMike\LaravelClickHouse\Database\Model;
+
+class Events extends Model
+{
+    // ...
+}
+```
+That's all, you can work with clickhouse using the familiar Eloquent model.
+
+### Following features coming soon
+
+- Clusters switching
+- Server switching
+- Native clickhouse functions for the model (sumIf, countIf, quantilesTimingIf, argMinIf and etc.)
+- New migration manager and new Blueprint for Clickhouse
+- New data types for queries
