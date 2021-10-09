@@ -11,6 +11,11 @@ use Illuminate\Support\ServiceProvider;
 
 class ClickhouseServiceProvider extends ServiceProvider
 {
+    public function register(): void
+    {
+        // @todo: register connection config builder
+    }
+
     public function boot(): void
     {
         /** @var DatabaseManager $db */
@@ -19,9 +24,12 @@ class ClickhouseServiceProvider extends ServiceProvider
         $db->extend('clickhouse', function ($config, $name) {
             $config['name'] = $name;
 
-            return new Connection($config, $config['database']);
+            return new Connection($config);
         });
 
-        Model::setConnectionResolver($db->connection('clickhouse'));
+        /** @var Connection $connection */
+        $connection = $db->connection('clickhouse');
+
+        Model::setConnectionResolver($connection);
     }
 }

@@ -16,13 +16,13 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
 {
     private HttpClient $client;
 
-    public function __construct(array $databaseConfig, $database = '', $tablePrefix = '', array $config = [])
+    public function __construct(array $config)
     {
         $this->client = new HttpClient();
 
-        $this->database = $databaseConfig['database'];
+        $this->database = $config['database'];
 
-        $this->setDatabaseName($databaseConfig['database']);
+        $this->setDatabaseName($config['database']);
 
         $this->useDefaultQueryGrammar();
 
