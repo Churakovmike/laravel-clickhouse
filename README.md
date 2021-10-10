@@ -14,11 +14,11 @@ Requirements
 Install
 ------------
 ```php 
-composer install churakovmike/laravel-clickhouse
+composer require churakovmike/laravel-clickhouse
 ```
 or
 ```php
-php composer.phar install churakovmike/laravel-clickhouse
+php composer.phar require churakovmike/laravel-clickhouse
 ```
 
 Integrations
