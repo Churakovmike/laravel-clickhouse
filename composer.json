@@ -24,5 +24,8 @@
     },
     "config": {
         "sort-packages": true
+    },
+    "require-dev": {
+        "vimeo/psalm": "4.x-dev"
     }
 }
