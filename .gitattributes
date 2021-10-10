@@ -7,3 +7,4 @@
 /.gitignore         export-ignore
 /psalm.xml          export-ignore
 /psalm.xml.dist     export-ignore
+/.styleci.yml
