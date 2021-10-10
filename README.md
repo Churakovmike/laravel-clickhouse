@@ -16,9 +16,10 @@ Install
 ```php 
 composer require churakovmike/laravel-clickhouse
 ```
-or
+
+If you need the latest version
 ```php
-php composer.phar require churakovmike/laravel-clickhouse
+composer require churakovmike/laravel-clickhouse:dev-main
 ```
 
 Integrations

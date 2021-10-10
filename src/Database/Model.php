@@ -56,7 +56,7 @@ class Model extends \Illuminate\Database\Eloquent\Model
         return new \ChurakovMike\LaravelClickHouse\Database\Builder($query);
     }
 
-    protected function setKeysForSaveQuery(Builder $query): Builder
+    protected function setKeysForSaveQuery($query): Builder
     {
         $query->where($this->getKeyName(), '=', $this->getKeyForSaveQuery());
 
