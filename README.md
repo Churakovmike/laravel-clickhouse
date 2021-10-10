@@ -5,8 +5,7 @@ Laravel Clickhouse
 [![License](http://poser.pugx.org/churakovmike/laravel-clickhouse/license)](https://packagist.org/packages/churakovmike/laravel-clickhouse)
 [![Latest Stable Version](http://poser.pugx.org/churakovmike/laravel-clickhouse/v)](https://packagist.org/packages/churakovmike/laravel-clickhouse)
 [![PHP Version Require](http://poser.pugx.org/churakovmike/laravel-clickhouse/require/php)](https://packagist.org/packages/churakovmike/laravel-clickhouse)
-[![PHP][icon-psalmconfig]][href-psalmconfig]
-[![Latest Version on Packagist][icon-version]][href-version]
+![PSALM](https://github.com/github/docs/actions/workflows/psalm.yml/badge.svg)
 ----------------------------------------------------------------------------------------------------------------------
 Requirements
 ------------
