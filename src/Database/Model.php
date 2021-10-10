@@ -21,6 +21,11 @@ class Model extends \Illuminate\Database\Eloquent\Model
         return $this;
     }
 
+    /**
+     * @return string
+     *
+     * @psalm-suppress RedundantPropertyInitializationCheck
+     */
     public function getTable(): string
     {
         $tableName = $this->table ?? Str::snake(Str::pluralStudly(class_basename($this)));
@@ -39,6 +44,9 @@ class Model extends \Illuminate\Database\Eloquent\Model
         return $this;
     }
 
+    /**
+     * @return ConnectionResolverInterface|Connection
+     */
     public static function getConnectionResolver(): ConnectionResolverInterface
     {
         return static::$resolver;
@@ -86,6 +94,13 @@ class Model extends \Illuminate\Database\Eloquent\Model
         return true;
     }
 
+    /**
+     * @param Builder $query
+     * @param array $dirty
+     * @return Builder
+     *
+     * @psalm-suppress UnusedForeachValue
+     */
     protected function saveDirtyKeyNameForSaveQuery(Builder $query, array $dirty): Builder
     {
         foreach ($dirty as $key => $value) {

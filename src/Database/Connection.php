@@ -116,11 +116,18 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         return $this->client->post($statement);
     }
 
-    public function update($query, $bindings = [])
+    public function update($query, $bindings = []): bool
     {
         return $this->affectingStatement($query, $bindings);
     }
 
+    /**
+     * @param string $query
+     * @param array $bindings
+     * @return int|void
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
+     */
     public function delete($query, $bindings = [])
     {
         $statement = $this->bindQueryValues($query, $bindings);
@@ -138,7 +145,7 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
         return $this->client->get($statement);
     }
 
-    public function affectingStatement($query, $bindings = [])
+    public function affectingStatement($query, $bindings = []): bool
     {
         $statement = $this->bindQueryValues($query, $bindings);
 
@@ -193,6 +200,8 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
      *
      * @param null $toLevel
      * @throws ConnectionException
+     *
+     * @psalm-suppress MoreSpecificImplementedParamType
      */
     public function rollBack($toLevel = null): void
     {
@@ -214,6 +223,8 @@ class Connection extends \Illuminate\Database\Connection implements ConnectionRe
      *
      * @param \Closure $callback
      * @return array|void
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
      */
     public function pretend(\Closure $callback)
     {

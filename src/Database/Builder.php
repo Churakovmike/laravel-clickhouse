@@ -6,6 +6,11 @@ namespace ChurakovMike\LaravelClickHouse\Database;
 
 class Builder extends \Illuminate\Database\Eloquent\Builder
 {
+    /**
+     * @return false|int|mixed
+     *
+     * @psalm-suppress RedundantPropertyInitializationCheck
+     */
     public function delete()
     {
         if (isset($this->onDelete)) {
