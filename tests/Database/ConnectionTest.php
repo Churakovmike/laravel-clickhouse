@@ -2,10 +2,13 @@
 
 namespace ChurakovMike\LaravelClickHouse\Tests\Database;
 
+use ChurakovMike\LaravelClickHouse\Database\Client\HttpClient;
 use ChurakovMike\LaravelClickHouse\Database\Connection;
+use ChurakovMike\LaravelClickHouse\Database\Exceptions\ConnectionException;
 use ChurakovMike\LaravelClickHouse\Database\Query\Builder;
 use ChurakovMike\LaravelClickHouse\Tests\TestCase;
 use Illuminate\Database\Query\Expression;
+use ChurakovMike\LaravelClickHouse\Database\Query\Builder as QueryBuilder;
 
 class ConnectionTest extends TestCase
 {
@@ -44,126 +47,153 @@ class ConnectionTest extends TestCase
 
     public function testSelectOne(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testSelect(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testBindQueryValues(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testSetOutputFormat(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testReplaceArray(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testCursor(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testInsert(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testUpdate(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testDelete(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testStatement(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testAffectingStatement(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testUnprepared(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testPrepareBindings(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 
     public function testTransaction(): void
     {
-        //todo
+        $connection = $this->getConnection();
+        $this->expectException(ConnectionException::class);
+        $connection->transaction(fn($closure) => $closure);
     }
 
     public function testBeginTransaction(): void
     {
-        //todo
+        $connection = $this->getConnection();
+        $this->expectException(ConnectionException::class);
+        $connection->beginTransaction();
     }
 
     public function testCommit(): void
     {
-        //todo
+        $connection = $this->getConnection();
+        $this->expectException(ConnectionException::class);
+        $connection->commit();
     }
 
     public function testRollBack(): void
     {
-        //todo
+        $connection = $this->getConnection();
+        $this->expectException(ConnectionException::class);
+        $connection->rollBack();
     }
 
     public function testTransactionLevel(): void
     {
-        //todo
+        $connection = $this->getConnection();
+        $this->expectException(ConnectionException::class);
+        $connection->transactionLevel();
     }
 
     public function testPretend(): void
     {
-        //todo
+        $connection = $this->getConnection();
+        $this->assertNull($connection->pretend(fn($closure) => $closure));
     }
 
     public function testConnection(): void
     {
-        //todo
+        $connection = $this->getConnection();
+        $conn = $connection->connection();
+        $this->assertSame($connection, $conn);
     }
 
     public function testGetDefaultConnection(): void
     {
-        //todo
+        $connection = $this->getConnection();
+        $conn = $connection->getDefaultConnection();
+        $this->assertSame($connection, $conn);
     }
 
     public function testSetDefaultConnection(): void
     {
-        //todo
+        $connection = $this->getConnection();
+        $result = $connection->setDefaultConnection('test-connection');
+        $this->assertIsBool($result);
+        $this->assertTrue($connection->setDefaultConnection($result));
     }
 
     public function testQuery(): void
     {
-        //todo
+        $connection = $this->getConnection();
+        $builder = $connection->query();
+
+        $this->assertInstanceOf(QueryBuilder::class, $builder);
     }
 
     public function testGetClient(): void
     {
-        //todo
+        $connectionMock = $this->getConnectionMock();
+        $connectionMock->method('getClient')
+            ->willReturn($this->createMock(HttpClient::class));
+
+        $mock = $connectionMock->getClient([]);
+
+        $this->assertTrue($mock instanceof HttpClient);
     }
 
     public function testGetDefaultQueryGrammar(): void
     {
-        //todo
+        $this->markTestSkipped('must be implemented.');
     }
 }
