@@ -114,7 +114,7 @@ class ConnectionTest extends TestCase
     {
         $connection = $this->getConnection();
         $this->expectException(ConnectionException::class);
-        $connection->transaction(fn($closure) => $closure);
+        $connection->transaction(fn ($closure) => $closure);
     }
 
     public function testBeginTransaction(): void
@@ -148,7 +148,7 @@ class ConnectionTest extends TestCase
     public function testPretend(): void
     {
         $connection = $this->getConnection();
-        $this->assertNull($connection->pretend(fn($closure) => $closure));
+        $this->assertNull($connection->pretend(fn ($closure) => $closure));
     }
 
     public function testConnection(): void
