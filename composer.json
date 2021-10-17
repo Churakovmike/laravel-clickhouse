@@ -15,7 +15,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "ChurakovMike\\LaravelClickHouse\\": "src/"
+            "ChurakovMike\\LaravelClickHouse\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ChurakovMike\\LaravelClickHouse\\Tests\\": "tests"
         }
     },
     "minimum-stability": "dev",

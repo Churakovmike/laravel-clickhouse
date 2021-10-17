@@ -4,7 +4,7 @@ namespace ChurakovMike\LaravelClickHouse\Tests\Database;
 
 use ChurakovMike\LaravelClickHouse\Tests\TestCase;
 
-class Connection extends TestCase
+class ConnectionTest extends TestCase
 {
     public function testTest(): void
     {
