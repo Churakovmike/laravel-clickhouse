@@ -7,4 +7,6 @@
 /.gitignore         export-ignore
 /psalm.xml          export-ignore
 /psalm.xml.dist     export-ignore
-/.styleci.yml
+/.styleci.yml       export-ignore
+/tests              export-ignore
+/phpunit.xml.dist   export-ignore
