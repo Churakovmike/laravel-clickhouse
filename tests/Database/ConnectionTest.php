@@ -91,7 +91,7 @@ class ConnectionTest extends TestCase
 
         $this->assertEquals(
             'select * from table where user_id = 5',
-            $connection->replaceArray('?', [5],$statement)
+            $connection->replaceArray('?', [5], $statement)
         );
     }
 
