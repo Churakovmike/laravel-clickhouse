@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ChurakovMike\LaravelClickHouse\Tests;
 
 use ChurakovMike\LaravelClickHouse\Database\Connection;
+use ChurakovMike\LaravelClickHouse\Database\Model;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase as BaseTestCase;
 
@@ -31,5 +32,10 @@ class TestCase extends BaseTestCase
     public function getConnectionMock(): MockObject
     {
         return $this->createMock(Connection::class);
+    }
+
+    public function getModel(): Model
+    {
+        return new Model();
     }
 }
