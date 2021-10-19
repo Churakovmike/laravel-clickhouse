@@ -47,17 +47,33 @@ class ConnectionTest extends TestCase
 
     public function testSelectOne(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $connection = $this->getConnectionMock();
+        $connection
+            ->method('selectOne')
+            ->willReturn([]);
+
+        $this->assertEquals([], $connection->selectOne('select * from table'));
     }
 
     public function testSelect(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $connection = $this->getConnectionMock();
+        $connection
+            ->method('select')
+            ->willReturn([]);
+
+        $this->assertEquals([], $connection->select('select * from table'));
     }
 
     public function testBindQueryValues(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $connection = $this->getConnection();
+        $statement = 'select * from table where id = ?';
+
+        $this->assertEquals(
+            'select * from table where id = 5',
+            $connection->bindQueryValues($statement, [5])
+        );
     }
 
     public function testSetOutputFormat(): void
@@ -102,12 +118,24 @@ class ConnectionTest extends TestCase
 
     public function testUnprepared(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $connectionMock = $this->getConnectionMock();
+        $connectionMock
+            ->method('getClient')
+            ->willReturn($this->createMock(HttpClient::class));
+
+        $connectionMock
+            ->method('unprepared')
+            ->willReturn(true);
+
+        $this->assertEquals(true, $connectionMock->unprepared(''));
     }
 
     public function testPrepareBindings(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $bindings = ['test_bindings'];
+        $connection = $this->getConnection();
+
+        $this->assertEquals($bindings, $connection->prepareBindings($bindings));
     }
 
     public function testTransaction(): void
