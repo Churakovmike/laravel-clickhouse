@@ -78,42 +78,81 @@ class ConnectionTest extends TestCase
 
     public function testSetOutputFormat(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $connection = $this->getConnection();
+        $statement = 'select * from table';
+
+        $this->assertEquals('select * from table FORMAT JSON', $connection->setOutputFormat($statement));
     }
 
     public function testReplaceArray(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $connection = $this->getConnection();
+        $statement = 'select * from table where user_id = ?';
+
+        $this->assertEquals(
+            'select * from table where user_id = 5',
+            $connection->replaceArray('?', [5], $statement)
+        );
     }
 
     public function testCursor(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $connection = $this->getConnectionMock();
+        $connection
+            ->method('cursor')
+            ->willReturn([]);
+
+        $this->assertEquals([], $connection->cursor('select * from table'));
     }
 
     public function testInsert(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $connection = $this->getConnectionMock();
+        $connection
+            ->method('insert')
+            ->willReturn(true);
+
+        $this->assertEquals(true, $connection->insert(''));
     }
 
     public function testUpdate(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $connection = $this->getConnectionMock();
+        $connection
+            ->method('update')
+            ->willReturn(true);
+
+        $this->assertEquals(true, $connection->update(''));
     }
 
     public function testDelete(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $connection = $this->getConnectionMock();
+        $connection
+            ->method('delete')
+            ->willReturn(true);
+
+        $this->assertEquals(true, $connection->delete('delete * from table'));
     }
 
     public function testStatement(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $connection = $this->getConnectionMock();
+        $connection
+            ->method('statement')
+            ->willReturn([]);
+
+        $this->assertEquals([], $connection->statement('select * from table'));
     }
 
     public function testAffectingStatement(): void
     {
-        $this->markTestSkipped('must be implemented.');
+        $connection = $this->getConnectionMock();
+        $connection
+            ->method('affectingStatement')
+            ->willReturn(true);
+
+        $this->assertEquals(true, $connection->affectingStatement('select * from table'));
     }
 
     public function testUnprepared(): void
