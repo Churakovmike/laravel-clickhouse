@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types=1);
+namespace ChurakovMike\LaravelClickHouse\Tests\Query;
 
 use ChurakovMike\LaravelClickHouse\Tests\TestCase;
 use ChurakovMike\LaravelClickHouse\Database\Query\Builder;
