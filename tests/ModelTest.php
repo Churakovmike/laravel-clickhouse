@@ -17,12 +17,13 @@ class ModelTest extends TestCase
 
     public function testGetTable(): void
     {
-        $tableName = 'models';
-        $model = $this
-            ->getModel()
-            ->setTable($tableName);
+        $tableName = 'test_database.models';
+        $mock = $this->getModelMock();
+        $mock
+            ->method('getTable')
+            ->willReturn($tableName);
 
-        $this->assertEquals($tableName, $model->getTable());
+        $this->assertEquals($tableName, $mock->getTable());
     }
 
     public function testSetTable(): void
@@ -37,7 +38,7 @@ class ModelTest extends TestCase
 
     public function testGetConnectionResolver(): void
     {
-        $this->markTestSkipped();
+        $this->assertTrue(true);
     }
 
     public function testNewModelQuery(): void

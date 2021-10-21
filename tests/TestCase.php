@@ -38,4 +38,12 @@ class TestCase extends BaseTestCase
     {
         return new Model();
     }
+
+    /**
+     * @return MockObject|Model
+     */
+    public function getModelMock(): MockObject
+    {
+        return $this->createMock(Model::class);
+    }
 }
